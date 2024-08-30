@@ -1,0 +1,5 @@
+{
+    "module": "codbex-payment-invoice-ext/generate/SalesInvoicePayment/sales-invoice-payment-generate.js",
+    "extensionPoint": "codbex-payments-custom-action",
+    "description": "Generate Sales Invoice Payment From Customer Payment Custom Action"
+}
