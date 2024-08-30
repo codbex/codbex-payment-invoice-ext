@@ -1,5 +1,6 @@
 import { SalesInvoiceRepository as SalesInvoiceDao } from "../../../../codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoiceRepository";
 import { CustomerPaymentRepository as CustomerPaymentDao } from "../../../../codbex-payments/gen/codbex-payments/dao/CustomerPayment/CustomerPaymentRepository";
+import { SalesInvoicePaymentRepository as SalesInvoicePaymentDao } from "../../../../codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoicePaymentRepository";
 
 import { Controller, Get } from "sdk/http";
 
@@ -8,10 +9,12 @@ class GenerateSalesInvoicePaymentService {
 
     private readonly salesInvoiceDao;
     private readonly customerPaymentDao;
+    private readonly salesInvoicePaymentDao;
 
     constructor() {
         this.salesInvoiceDao = new SalesInvoiceDao();
         this.customerPaymentDao = new CustomerPaymentDao();
+        this.salesInvoicePaymentDao = new SalesInvoicePaymentDao();
     }
 
     @Get("/salesInvoiceData/:customerPaymentId")
@@ -28,8 +31,27 @@ class GenerateSalesInvoicePaymentService {
             }
         });
 
+        let notPaidInvoices = [];
+
+        salesInvoices.forEach((invoice) => {
+
+            let salesInvoicePayments = this.salesInvoicePaymentDao.findAll({
+                $filter: {
+                    equals: {
+                        CustomerPayment: customerPayment.Id,
+                        SalesInvoice: invoice.Id,
+                    }
+                }
+            });
+
+            if (salesInvoicePayments.length == 0) {
+                notPaidInvoices.push(invoice);
+            }
+
+        });
+
         return {
-            "salesInvoices": salesInvoices
+            "salesInvoices": notPaidInvoices
         };
     }
 

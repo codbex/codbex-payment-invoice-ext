@@ -28,10 +28,15 @@
                 <fd-scrollbar class="dg-full-height">
                     <fd-fieldset ng-form="forms.details">
                         <fd-form-group name="entityForm" class="fd-container fd-form-layout-grid-container">
-                            <fd-form-item ng-repeat="item in SalesInvoices">
+                            <fd-form-item ng-if="SalesInvoices.length > 0" ng-repeat="item in SalesInvoices">
                                 <div class="dialog-select">
                                     <input type="checkbox" ng-model="item.selected" />
                                     <p>{{item.Number}}</p>
+                                </div>
+                            </fd-form-item>
+                            <fd-form-item ng-if="SalesInvoices.length == 0">
+                                <div class="dialog-select">
+                                    <h3>The customer doesn't have unpaid sales invoices</h3>
                                 </div>
                             </fd-form-item>
                             <fd-bar class="dialog-buttons" bar-design="footer" compact="true"
@@ -39,6 +44,7 @@
                                 <fd-bar-right>
                                     <fd-bar-element>
                                         <fd-button class="button" dg-label="Generate" dg-type="emphasized"
+                                            state="{{ SalesInvoices.length > 0 ? '' : 'disabled' }}"
                                             ng-click="generateSalesInvoicePayment()">
                                         </fd-button>
                                     </fd-bar-element>
