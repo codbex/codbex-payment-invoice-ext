@@ -1,6 +1,6 @@
-import { SalesInvoiceRepository as SalesInvoiceDao } from "../../../../codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoiceRepository";
-import { CustomerPaymentRepository as CustomerPaymentDao } from "../../../../codbex-payments/gen/codbex-payments/dao/CustomerPayment/CustomerPaymentRepository";
-import { SalesInvoicePaymentRepository as SalesInvoicePaymentDao } from "../../../../codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoicePaymentRepository";
+import { SalesInvoiceRepository as SalesInvoiceDao } from "codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoiceRepository";
+import { CustomerPaymentRepository as CustomerPaymentDao } from "codbex-payments/gen/codbex-payments/dao/CustomerPayment/CustomerPaymentRepository";
+import { SalesInvoicePaymentRepository as SalesInvoicePaymentDao } from "codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoicePaymentRepository";
 
 import { Controller, Get } from "sdk/http";
 
@@ -21,9 +21,9 @@ class GenerateSalesInvoicePaymentService {
     public salesInvoiceData(_: any, ctx: any) {
         const customerPaymentId = ctx.pathParameters.customerPaymentId;
 
-        let customerPayment = this.customerPaymentDao.findById(customerPaymentId);
+        const customerPayment = this.customerPaymentDao.findById(customerPaymentId);
 
-        let salesInvoices = this.salesInvoiceDao.findAll({
+        const salesInvoices = this.salesInvoiceDao.findAll({
             $filter: {
                 equals: {
                     Customer: customerPayment.Customer
@@ -35,7 +35,7 @@ class GenerateSalesInvoicePaymentService {
 
         salesInvoices.forEach((invoice) => {
 
-            let salesInvoicePayments = this.salesInvoicePaymentDao.findAll({
+            const salesInvoicePayments = this.salesInvoicePaymentDao.findAll({
                 $filter: {
                     equals: {
                         CustomerPayment: customerPayment.Id,
@@ -59,7 +59,7 @@ class GenerateSalesInvoicePaymentService {
     public customerPaymentData(_: any, ctx: any) {
         const customerPaymentId = ctx.pathParameters.customerPaymentId;
 
-        let customerPayment = this.customerPaymentDao.findById(customerPaymentId);
+        const customerPayment = this.customerPaymentDao.findById(customerPaymentId);
 
         return {
             "Id": customerPayment.Id,
