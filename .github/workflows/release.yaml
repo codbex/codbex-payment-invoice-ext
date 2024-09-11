@@ -1,0 +1,33 @@
+name: Release - Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: Release Version
+        required: true
+        default: 1.0.0
+
+run-name: 'version set to ${{ inputs.release-version }} for release'
+
+jobs:
+  modules:
+    uses: codbex/codbex-infra/.github/workflows/module-release.yaml@main
+    with:
+      packages: codbex-payment-invoice-ext
+      release-version: ${{ inputs.release-version }}
+      release-content: |
+        ## codbex-payment-invoice-ext - ${{ inputs.release-version }}
+  
+        Warehouse Management - Data Sample
+  
+        ## Installation
+  
+        ```
+        npm install @codbex/codbex-payment-invoice-ext@${{ inputs.release-version }}
+        ```
+  
+        ## Access points:
+  
+        - N/A
+    secrets: inherit
