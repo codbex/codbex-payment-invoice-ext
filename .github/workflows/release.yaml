@@ -20,7 +20,7 @@ jobs:
       release-content: |
         ## codbex-payment-invoice-ext - ${{ inputs.release-version }}
   
-        Order Invoice Extension - Module
+        Payment Invoice Extension - Module
   
         ## Installation
   
