@@ -15,11 +15,12 @@ jobs:
     uses: codbex/codbex-infra/.github/workflows/module-release.yaml@main
     with:
       packages: codbex-payment-invoice-ext
+      packages-build: codbex-payment-invoice-ext
       release-version: ${{ inputs.release-version }}
       release-content: |
         ## codbex-payment-invoice-ext - ${{ inputs.release-version }}
   
-        Warehouse Management - Data Sample
+        Payment Invoice Extension - Module
   
         ## Installation
   
