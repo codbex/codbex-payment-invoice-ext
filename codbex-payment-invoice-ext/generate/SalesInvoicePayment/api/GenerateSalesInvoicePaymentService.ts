@@ -23,7 +23,8 @@ class GenerateSalesInvoicePaymentService {
         const salesInvoices = this.salesInvoiceDao.findAll({
             $filter: {
                 equals: {
-                    Customer: customerPayment.Customer
+                    Customer: customerPayment.Customer,
+                    Currency: customerPayment.Currency
                 },
                 notEquals: {
                     Status: 6
