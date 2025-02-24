@@ -1,6 +1,5 @@
 import { PurchaseInvoiceRepository as PurchaseInvoiceDao } from "codbex-invoices/gen/codbex-invoices/dao/purchaseinvoice/PurchaseInvoiceRepository";
 import { SupplierPaymentRepository as SupplierPaymentDao } from "codbex-payments/gen/codbex-payments/dao/SupplierPayment/SupplierPaymentRepository";
-import { SalesInvoicePaymentRepository as SalesInvoicePaymentDao } from "codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoicePaymentRepository";
 
 import { Controller, Get } from "sdk/http";
 
@@ -17,8 +16,8 @@ class GenerateSalesInvoicePaymentService {
 
     @Get("/purchaseInvoiceData/:supplierPaymentId")
     public purchaseInvoiceData(_: any, ctx: any) {
-        const supplierPaymentId = ctx.pathParameters.supplierPaymentId;
 
+        const supplierPaymentId = ctx.pathParameters.supplierPaymentId;
         const supplierPayment = this.supplierPaymentDao.findById(supplierPaymentId);
 
         const purchaseInvoices = this.purchaseInvoiceDao.findAll({
@@ -39,8 +38,8 @@ class GenerateSalesInvoicePaymentService {
 
     @Get("/supplierPayment/:supplierPaymentId")
     public supplierPaymentData(_: any, ctx: any) {
-        const supplierPaymentId = ctx.pathParameters.supplierPaymentId;
 
+        const supplierPaymentId = ctx.pathParameters.supplierPaymentId;
         const supplierPayment = this.supplierPaymentDao.findById(supplierPaymentId);
 
         return {

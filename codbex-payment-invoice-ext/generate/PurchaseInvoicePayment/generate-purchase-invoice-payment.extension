@@ -1,5 +1,5 @@
 {
     "module": "codbex-payment-invoice-ext/generate/PurchaseInvoicePayment/purchase-invoice-payment-generate.js",
     "extensionPoint": "codbex-payments-custom-action",
-    "description": "Generate Purchase Invoice Payment From Customer Payment Custom Action"
+    "description": "Generate Purchase Invoice Payment From Supplier Payment Custom Action"
 }

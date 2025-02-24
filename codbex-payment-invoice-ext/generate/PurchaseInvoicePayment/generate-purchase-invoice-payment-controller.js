@@ -43,7 +43,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
                 .then(function (response) {
                     $scope.closeDialog();
                 }).catch(function (error) {
-                    console.error("Error creating Sales Invoice Payment", error);
+                    console.error("Error creating Purchase Invoice Payment", error);
                     $scope.closeDialog();
                 });
         });

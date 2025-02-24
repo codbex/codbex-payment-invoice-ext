@@ -16,8 +16,8 @@ class GenerateSalesInvoicePaymentService {
 
     @Get("/salesInvoiceData/:customerPaymentId")
     public salesInvoiceData(_: any, ctx: any) {
-        const customerPaymentId = ctx.pathParameters.customerPaymentId;
 
+        const customerPaymentId = ctx.pathParameters.customerPaymentId;
         const customerPayment = this.customerPaymentDao.findById(customerPaymentId);
 
         const salesInvoices = this.salesInvoiceDao.findAll({
@@ -38,8 +38,8 @@ class GenerateSalesInvoicePaymentService {
 
     @Get("/customerPayment/:customerPaymentId")
     public customerPaymentData(_: any, ctx: any) {
-        const customerPaymentId = ctx.pathParameters.customerPaymentId;
 
+        const customerPaymentId = ctx.pathParameters.customerPaymentId;
         const customerPayment = this.customerPaymentDao.findById(customerPaymentId);
 
         return {
