@@ -30,6 +30,9 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
 
         salesInvoices.forEach((invoice) => {
 
+            const remainingPayment = invoice.Total - invoice.Paid;
+            $scope.CustomerPayment.Amount = Math.min($scope.CustomerPayment.Amount, remainingPayment);
+
             const salesInvoicePayment = {
                 "SalesInvoice": invoice.Id,
                 "CustomerPayment": $scope.CustomerPayment.Id,
