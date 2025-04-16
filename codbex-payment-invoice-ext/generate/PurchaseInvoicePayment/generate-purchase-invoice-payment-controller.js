@@ -1,7 +1,6 @@
-const app = angular.module('templateApp', ['ideUI', 'ideView']);
-app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'messageHub', function ($scope, $http, ViewParameters, messageHub) {
+angular.module('templateApp', ['blimpKit', 'platformView']).controller('templateController', ($scope, $http, ViewParameters) => {
     const params = ViewParameters.get();
-    $scope.showDialog = true;
+    const Dialogs = new DialogHub();
 
     const purchaseInvoicesUrl = "/services/ts/codbex-payment-invoice-ext/generate/PurchaseInvoicePayment/api/GeneratePurchaseInvoicePaymentService.ts/purchaseInvoiceData/" + params.id;
     const supplierPaymentUrl = "/services/ts/codbex-payment-invoice-ext/generate/PurchaseInvoicePayment/api/GeneratePurchaseInvoicePaymentService.ts/supplierPayment/" + params.id;
@@ -40,20 +39,23 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             }
 
             $http.post(purchaseInvoicePaymentUrl, purchaseInvoicePayment)
-                .then(function (response) {
+                .then(response => {
                     $scope.closeDialog();
-                }).catch(function (error) {
-                    console.error("Error creating Purchase Invoice Payment", error);
+                    console.log("Purchase Invoice Payment created successfully:", response.data);
+                }).catch(error => {
+                    Dialogs.showAlert({
+                        title: 'Error creating debit note',
+                        message: error.data.message,
+                        type: AlertTypes.Error,
+                        preformatted: true,
+                    });
+                    console.error('Error creating debit note:', error.data.message);
                     $scope.closeDialog();
                 });
         });
-
     }
 
-    $scope.closeDialog = function () {
-        $scope.showDialog = false;
-        messageHub.closeDialogWindow("purchase-invoice-payment-generate");
+    $scope.closeDialog = () => {
+        Dialogs.closeWindow({ path: viewData.path });
     };
-
-    document.getElementById("dialog").style.display = "block";
-}]);
+});
