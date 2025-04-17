@@ -1,7 +1,6 @@
-const app = angular.module('templateApp', ['ideUI', 'ideView']);
-app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'messageHub', function ($scope, $http, ViewParameters, messageHub) {
+angular.module('templateApp', ['blimpKit', 'platformView']).controller('templateController', ($scope, $http, ViewParameters) => {
     const params = ViewParameters.get();
-    $scope.showDialog = true;
+    const Dialogs = new DialogHub();
 
     const salesInvoicesUrl = "/services/ts/codbex-payment-invoice-ext/generate/SalesInvoicePayment/api/GenerateSalesInvoicePaymentService.ts/salesInvoiceData/" + params.id;
     const customerPaymentUrl = "/services/ts/codbex-payment-invoice-ext/generate/SalesInvoicePayment/api/GenerateSalesInvoicePaymentService.ts/customerPayment/" + params.id;
@@ -25,7 +24,7 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
         });
 
 
-    $scope.generateSalesInvoicePayment = function () {
+    $scope.generateSalesInvoicePayment = () => {
         const salesInvoices = $scope.SalesInvoices.filter(item => item.selected);
 
         salesInvoices.forEach((invoice) => {
@@ -40,20 +39,24 @@ app.controller('templateController', ['$scope', '$http', 'ViewParameters', 'mess
             }
 
             $http.post(salesInvoicePaymentUrl, salesInvoicePayment)
-                .then(function (response) {
+                .then(response => {
                     $scope.closeDialog();
-                }).catch(function (error) {
-                    console.error("Error creating Sales Invoice Payment", error);
+                    console.log("Sales Invoice Payment created successfully:", response.data);
+                }).catch(error => {
+                    Dialogs.showAlert({
+                        title: 'Error creating debit note',
+                        message: error.data.message,
+                        type: AlertTypes.Error,
+                        preformatted: true,
+                    });
+                    console.error('Error creating Sales Invoice Payment', error.data.message);
                     $scope.closeDialog();
                 });
         });
 
     }
 
-    $scope.closeDialog = function () {
-        $scope.showDialog = false;
-        messageHub.closeDialogWindow("sales-invoice-payment-generate");
+    $scope.closeDialog = () => {
+        Dialogs.closeWindow({ path: viewData.path });
     };
-
-    document.getElementById("dialog").style.display = "block";
-}]);
+});
