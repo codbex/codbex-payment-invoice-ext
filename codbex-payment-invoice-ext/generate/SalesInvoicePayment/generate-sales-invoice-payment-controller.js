@@ -38,26 +38,10 @@ angular.module('templateApp', ['blimpKit', 'platformView']).controller('template
                 "Amount": $scope.CustomerPayment.Amount
             }
 
-            $http.post(salesInvoiceSubmitUrl, debitSalesInvoice)
-                .then(response => {
-                    console.log("Debit note created successfully:", response.data);
-                    $scope.closeDialog();
-                })
-                .catch(error => {
-                    Dialogs.showAlert({
-                        title: 'Error creating debit note',
-                        message: error.data.message,
-                        type: AlertTypes.Error,
-                        preformatted: true,
-                    });
-                    console.error('Error creating debit note:', error.data.message);
-                    $scope.closeDialog();
-                });
-
             $http.post(salesInvoicePaymentUrl, salesInvoicePayment)
                 .then(response => {
                     $scope.closeDialog();
-                    console.log("Debit note created successfully:", response.data);
+                    console.log("Sales Invoice Payment created successfully:", response.data);
                 }).catch(error => {
                     Dialogs.showAlert({
                         title: 'Error creating debit note',
@@ -65,7 +49,7 @@ angular.module('templateApp', ['blimpKit', 'platformView']).controller('template
                         type: AlertTypes.Error,
                         preformatted: true,
                     });
-                    console.error('Error creating debit note:', error.data.message);
+                    console.error('Error creating Sales Invoice Payment', error.data.message);
                     $scope.closeDialog();
                 });
         });

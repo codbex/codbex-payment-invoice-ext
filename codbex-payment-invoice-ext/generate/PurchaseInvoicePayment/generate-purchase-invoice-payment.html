@@ -14,41 +14,35 @@
         </script>
     </head>
 
-    <body class="wide-form">
-        <div class="dialog" id="dialog" ng-show="showDialog">
-            <div class="dialog-content">
-                <div class="title">Generate Purchase Invoice Payment</div>
-                <div class="line"></div>
-                <div class="main-text" ng-if="PurchaseInvoices.length != 0">
+    <body class="fd-padding">
+        <bk-fieldset>
+            <bk-form-group class="bk-vbox bk-center--horizontal">
+                <bk-form-item horizontal="false">
+                    <bk-form-label colon="true">Generate Purchase Invoice Payment</bk-form-label>
+                </bk-form-item>
+
+                <bk-form-item horizontal="false" ng-if="PurchaseInvoices.length != 0">
                     <p>Which purchase invoice would you like to attach to this payment?</p>
-                </div>
-                <fd-scrollbar class="dg-full-height">
-                    <fd-fieldset ng-form="forms.details">
-                        <fd-form-group name="entityForm" class="fd-container fd-form-layout-grid-container">
-                            <fd-form-item ng-if="PurchaseInvoices.length > 0" ng-repeat="item in PurchaseInvoices">
-                                <div class="dialog-select">
-                                    <input type="checkbox" ng-model="item.selected" />
-                                    <p>{{item.Number}}</p>
-                                </div>
-                            </fd-form-item>
-                            <fd-form-item ng-if="PurchaseInvoices.length == 0">
-                                <div class="dialog-select">
-                                    <h3>There are no invoices available for payment using this method.</h3>
-                                </div>
-                            </fd-form-item>
-                            <fd-bar class="dialog-buttons" bar-design="footer" compact="true" ng-show="action !== 'select'">
-                                <fd-bar-right>
-                                    <fd-bar-element>
-                                        <fd-button class="button" dg-label="Generate" dg-type="emphasized" state="{{ PurchaseInvoices.length > 0 ? '' : 'disabled' }}" ng-click="generatePurchaseInvoicePayment()">
-                                        </fd-button>
-                                    </fd-bar-element>
-                                </fd-bar-right>
-                            </fd-bar>
-                        </fd-form-group>
-                    </fd-fieldset>
-                </fd-scrollbar>
-            </div>
-        </div>
+                </bk-form-item>
+
+                <bk-form-item horizontal="false" ng-if="PurchaseInvoices.length > 0" ng-repeat="item in PurchaseInvoices">
+                    <div class="dialog-select">
+                        <input type="checkbox" ng-model="item.selected" />
+                        <p>{{item.Number}}</p>
+                    </div>
+                </bk-form-item>
+
+                <bk-form-item horizontal="false" ng-if="PurchaseInvoices.length == 0">
+                    <h3>There are no invoices available for payment using this method.</h3>
+                </bk-form-item>
+
+                <bk-form-item horizontal="false" ng-show="action !== 'select'">
+                    <bk-button ng-click="generatePurchaseInvoicePayment()" label="Generate" state="{{ PurchaseInvoices.length > 0 ? '' : 'disabled' }}">
+                    </bk-button>
+                </bk-form-item>
+            </bk-form-group>
+        </bk-fieldset>
+        <theme></theme>
     </body>
 
 </html>

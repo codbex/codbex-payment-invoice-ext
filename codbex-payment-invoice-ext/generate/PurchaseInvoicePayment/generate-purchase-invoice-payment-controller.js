@@ -44,12 +44,12 @@ angular.module('templateApp', ['blimpKit', 'platformView']).controller('template
                     console.log("Purchase Invoice Payment created successfully:", response.data);
                 }).catch(error => {
                     Dialogs.showAlert({
-                        title: 'Error creating debit note',
+                        title: 'Error creating Purchase Invoice Payment',
                         message: error.data.message,
                         type: AlertTypes.Error,
                         preformatted: true,
                     });
-                    console.error('Error creating debit note:', error.data.message);
+                    console.error('Error creating Purchase Invoice Payment:', error.data.message);
                     $scope.closeDialog();
                 });
         });
